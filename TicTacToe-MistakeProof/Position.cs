@@ -25,16 +25,19 @@ namespace TicTacToe.MistakeProof
 
         private static Row ParseRowFromLetter(string letter)
         {
-            var enumName = Enum.GetNames(typeof(Row)).First(n => n.ToLowerInvariant().StartsWith(letter));
-            Row value;
-            Enum.TryParse(enumName, out value);
-            return value;
+            return ParseEnumFromLetter<Row>(letter);
         }
 
         private static Column ParseColumnFromLetter(string letter)
         {
-            var enumName = Enum.GetNames(typeof(Column)).First(n => n.ToLowerInvariant().StartsWith(letter));
-            Column value;
+            return ParseEnumFromLetter<Column>(letter);
+        }
+
+        private static T ParseEnumFromLetter<T>(string letter) 
+            where T : struct
+        {
+            var enumName = Enum.GetNames(typeof(T)).First(n => n.ToLowerInvariant().StartsWith(letter));
+            T value;
             Enum.TryParse(enumName, out value);
             return value;
         }
