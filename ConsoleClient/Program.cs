@@ -44,21 +44,18 @@ namespace ConsoleClient
                     return ongoing.MoveO(PromptForPosition(Player.O));
                 },
                 won => _outStream.WriteLine($"Player {won.Winner} wins!"));
-            //var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
-            //    ongoing =>
-            //    {
-            //        return ongoing.MoveX(PromptForPosition(Player.X));
-            //    },
-            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
-            //var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
-            //    ongoing =>
-            //    {
-            //        return ongoing.MoveO(PromptForPosition(Player.O));
-            //    },
-            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
-            //gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
-            //    draw =>_outStream.WriteLine("Draw!"),
-            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
+                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveO(PromptForPosition(Player.O)),
+                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            var drawOrWonGame = gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
+                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            drawOrWonGame.OnDrawOrWonGame(
+                draw => _outStream.WriteLine("Draw!"),
+                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
         }
 
         private void PromptPlayerTurn(Player player)
