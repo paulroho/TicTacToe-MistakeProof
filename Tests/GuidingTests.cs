@@ -9,6 +9,9 @@ namespace Tests
         [Fact]
         public void MinimalGameWhereXWins()
         {
+            // OXO
+            // .X.
+            // .X.
             var game = new NewGame();
             var after1 = game.MoveX(At(Row.Middle, Column.Middle));
             var after2 = after1.MoveO(At(Row.Top, Column.Left));
