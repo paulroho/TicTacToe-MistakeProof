@@ -23,6 +23,9 @@ So I set some rules, but without further explanation of why these rules existed:
 * I should be able to call various functions on a game board that is in any state of play e.g. isPositionOccupied works for in-play and completed games.
 * It is not possible to play out of turn.
 
+Further ideas
+* Just allow moving to available fields
+
 
 ## Functional Requirements
 
