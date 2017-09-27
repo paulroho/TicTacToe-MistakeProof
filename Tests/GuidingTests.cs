@@ -16,8 +16,10 @@ namespace Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Right));
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
-            Assert.Equal(Player.X, after5.Winner);
-            Assert.True(after5.HasEnded);
+            after5.OnWonGame( won => {
+                Assert.Equal(Player.X, won.Winner);
+                Assert.True(won.HasEnded);
+            });
         }
 
         [Fact]
@@ -30,7 +32,9 @@ namespace Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Middle));
             var after5 = after4.MoveX(At(Row.Top, Column.Right));
 
-            Assert.False(after5.HasEnded);
+            after5.OnOngoingGame(after => {
+                Assert.False(after.HasEnded);
+            });
         }
 
         private Position At(Row row, Column column)
@@ -117,9 +121,58 @@ namespace Tests
 
     public class GameAfterFourthMove
     {
-        public WonGame MoveX(Position position)
+        public GameAfterFifthMoveOrWonGame MoveX(Position position)
         {
-            return new WonGame();
+            if (position.Equals(new Position(Row.Top, Column.Middle)))
+            {
+                return GameAfterFifthMoveOrWonGame.WonGame();
+            }
+            return GameAfterFifthMoveOrWonGame.GameAfterFifthMove();
+        }
+    }
+
+    public class GameAfterFifthMoveOrWonGame
+    {
+        private readonly GameAfterFifthMove _gameAfterFifthMove;
+        private readonly WonGame _wonGame;
+
+        private GameAfterFifthMoveOrWonGame(WonGame wonGame)
+        {
+            this._wonGame = wonGame;
+        }
+
+        private GameAfterFifthMoveOrWonGame(GameAfterFifthMove gameAfterFifthMove)
+        {
+            _gameAfterFifthMove = gameAfterFifthMove;
+        }
+
+        public static GameAfterFifthMoveOrWonGame GameAfterFifthMove()
+        {
+            return new GameAfterFifthMoveOrWonGame(new GameAfterFifthMove());
+        }
+
+        public static GameAfterFifthMoveOrWonGame WonGame()
+        {
+            return new GameAfterFifthMoveOrWonGame(new WonGame());
+        }
+
+        public void OnWonGame(Action<WonGame> onWonGame)
+        {
+            onWonGame(_wonGame);
+        }
+
+        public void OnOngoingGame(Action<GameAfterFifthMove> game)
+        {
+            game(_gameAfterFifthMove);
+        }
+
+    }
+
+    public class GameAfterFifthMove
+    {
+        public bool HasEnded
+        {
+            get { return false; }
         }
     }
 
