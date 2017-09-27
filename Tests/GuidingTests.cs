@@ -19,20 +19,20 @@ namespace Tests
             Assert.Equal(Player.X, after5.Winner);
         }
 
-        private Position At(Row middle, Column p1)
+        private Position At(Row row, Column column)
         {
-            throw new NotImplementedException();
+            return new Position(row, column);
         }
     }
 
-    internal enum Column
+    public enum Column
     {
         Middle,
         Left,
         Right
     }
 
-    internal enum Row
+    public enum Row
     {
         Middle,
         Top,
@@ -43,19 +43,45 @@ namespace Tests
     {
         public GameAfterOneMove MoveX(Position position)
         {
-            throw new NotImplementedException();
+            return new GameAfterOneMove();
         }
     }
 
     public class Position
     {
+        private readonly Row row;
+        private readonly Column column;
+
+        public Position(Row row, Column column)
+        {
+            this.row = row;
+            this.column = column;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj) || obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            Position that = (Position) obj;
+            return this.row == that.row && this.column == that.column;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((int) row * 397) ^ (int) column;
+            }
+        }
     }
 
     public class GameAfterOneMove
     {
         public GameAfterSecondMove MoveO(Position position)
         {
-            throw new NotImplementedException();
+            return new GameAfterSecondMove();
         }
     }
 
@@ -63,7 +89,7 @@ namespace Tests
     {
         public GameAfterThirdMove MoveX(Position position)
         {
-            throw new NotImplementedException();
+            return new GameAfterThirdMove();
         }
     }
 
@@ -71,7 +97,7 @@ namespace Tests
     {
         public GameAfterFourthMove MoveO(Position position)
         {
-            throw new NotImplementedException();
+            return new GameAfterFourthMove();
         }
     }
 
@@ -79,13 +105,16 @@ namespace Tests
     {
         public WonGame MoveX(Position position)
         {
-            throw new NotImplementedException();
+            return new WonGame();
         }
     }
 
     public class WonGame
     {
-        public Player Winner { get; }
+        public Player Winner
+        {
+            get { return Player.X; }
+        }
     }
 
     public enum Player
