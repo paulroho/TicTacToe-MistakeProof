@@ -7,7 +7,7 @@ namespace Tests
     public class GuidingTests
     {
         [Fact]
-        public void GuidingTest()
+        public void MinimalGameWhereXWins()
         {
             var game = new NewGame();
             var after1 = game.MoveX(At(Row.Middle, Column.Middle));
@@ -17,6 +17,20 @@ namespace Tests
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
             Assert.Equal(Player.X, after5.Winner);
+            Assert.True(after5.HasEnded);
+        }
+
+        [Fact]
+        public void GameOfFiveMovesNoWinnerYet()
+        {
+            var game = new NewGame();
+            var after1 = game.MoveX(At(Row.Middle, Column.Middle));
+            var after2 = after1.MoveO(At(Row.Top, Column.Left));
+            var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
+            var after4 = after3.MoveO(At(Row.Top, Column.Middle));
+            var after5 = after4.MoveX(At(Row.Top, Column.Right));
+
+            Assert.False(after5.HasEnded);
         }
 
         private Position At(Row row, Column column)
@@ -114,6 +128,11 @@ namespace Tests
         public Player Winner
         {
             get { return Player.X; }
+        }
+
+        public bool HasEnded
+        {
+            get { return true;  }
         }
     }
 
