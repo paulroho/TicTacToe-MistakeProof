@@ -93,6 +93,7 @@ namespace Tests
     {
         public GameAfterOneMove MoveX(Position position)
         {
+            // TODO capture position
             return new GameAfterOneMove();
         }
     }
@@ -101,6 +102,7 @@ namespace Tests
     {
         public GameAfterSecondMove MoveO(Position position)
         {
+            // TODO capture position
             return new GameAfterSecondMove();
         }
     }
@@ -109,6 +111,7 @@ namespace Tests
     {
         public GameAfterThirdMove MoveX(Position position)
         {
+            // TODO capture position
             return new GameAfterThirdMove();
         }
     }
@@ -117,6 +120,7 @@ namespace Tests
     {
         public GameAfterFourthMove MoveO(Position position)
         {
+            // TODO capture position
             return new GameAfterFourthMove();
         }
     }
@@ -127,10 +131,12 @@ namespace Tests
 
         public GameAfterFifthMoveOrWonGame MoveX(Position position)
         {
+            // TODO check for winner
             if (position.Equals(new Position(Row.Top, Column.Middle)))
             {
                 return GameAfterFifthMoveOrWonGame.WonGame();
             }
+            // TODO capture position
             return GameAfterFifthMoveOrWonGame.GameAfterFifthMove();
         }
     }
@@ -141,6 +147,7 @@ namespace Tests
 
         public GameAfterSixthMoveOrWonGame MoveO(Position position)
         {
+            // TODO same as in GameAfterFourthMove
             return GameAfterSixthMoveOrWonGame.WonGame();
         }
     }
@@ -153,6 +160,8 @@ namespace Tests
 
     public class GameAfterFifthMoveOrWonGame
     {
+        // complete
+        // TODO mayme make generic in GameAfterFifthMove
         private readonly GameAfterFifthMove _ongoingGame;
         private readonly WonGame _wonGame;
 
@@ -216,6 +225,8 @@ namespace Tests
 
     public class WonGame
     {
+        // TODO capture previous state for queries, else complete
+
         public WonGame(Player winner)
         {
             Winner = winner;

@@ -4,6 +4,7 @@ namespace Tests
 {
     public class Position
     {
+        // complete
         private readonly Row _row;
         private readonly Column _column;
 
