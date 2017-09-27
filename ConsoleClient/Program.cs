@@ -33,24 +33,32 @@ namespace ConsoleClient
         public void PlayGame()
         {
             var game = new NewGame();
-
-            var pos = PromptForPosition(Player.X);
-            var gameAfterOneMove = game.MoveX(pos);
-
+            var gameAfterOneMove = game.MoveX(PromptForPosition(Player.X));
             var gameAfterSecondMove = gameAfterOneMove.MoveO(PromptForPosition(Player.O));
-
             var gameAfterThirdMove = gameAfterSecondMove.MoveX(PromptForPosition(Player.X));
-
             var gameAfterFourthMove = gameAfterThirdMove.MoveO(PromptForPosition(Player.O));
-
             var gameAfterFifthMoveOrWonGame = gameAfterFourthMove.MoveX(PromptForPosition(Player.X));
-
-            gameAfterFifthMoveOrWonGame.OnOngoingOrWonGame(
+            var gameAfterSixthMoveOrWonGame = gameAfterFifthMoveOrWonGame.OnOngoingOrWonGame(
                 ongoing =>
                 {
                     return ongoing.MoveO(PromptForPosition(Player.O));
                 },
                 won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            //var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
+            //    ongoing =>
+            //    {
+            //        return ongoing.MoveX(PromptForPosition(Player.X));
+            //    },
+            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            //var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
+            //    ongoing =>
+            //    {
+            //        return ongoing.MoveO(PromptForPosition(Player.O));
+            //    },
+            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+            //gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
+            //    draw =>_outStream.WriteLine("Draw!"),
+            //    won => _outStream.WriteLine($"Player {won.Winner} wins!"));
         }
 
         private void PromptPlayerTurn(Player player)

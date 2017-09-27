@@ -4,5 +4,9 @@ namespace TicTacToe.MistakeProof
     {
         public bool HasEnded => false;
 
+        public void MoveX(Position promptForPosition)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
