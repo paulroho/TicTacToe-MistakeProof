@@ -15,6 +15,7 @@ namespace Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Right));
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
+            after5.OnOngoingGame(after => { AssertFail(); });
             after5.OnWonGame( won => {
                 Assert.Equal(Player.X, won.Winner);
                 Assert.True(won.HasEnded);
@@ -31,9 +32,13 @@ namespace Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Middle));
             var after5 = after4.MoveX(At(Row.Top, Column.Right));
 
-            after5.OnOngoingGame(after => {
-                Assert.False(after.HasEnded);
-            });
+            after5.OnOngoingGame(after => { Assert.False(after.HasEnded); });
+            after5.OnWonGame(won => { AssertFail(); });
+        }
+
+        private void AssertFail()
+        {
+            Assert.True(false);
         }
 
         private Position At(Row row, Column column)
@@ -113,12 +118,14 @@ namespace Tests
 
         public void OnWonGame(Action<WonGame> onWonGame)
         {
-            onWonGame(_wonGame);
+            if (_wonGame != null)
+                onWonGame(_wonGame);
         }
 
         public void OnOngoingGame(Action<GameAfterFifthMove> game)
         {
-            game(_gameAfterFifthMove);
+            if (_gameAfterFifthMove != null)
+                game(_gameAfterFifthMove);
         }
 
     }
