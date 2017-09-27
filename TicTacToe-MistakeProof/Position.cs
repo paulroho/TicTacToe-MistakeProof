@@ -17,6 +17,11 @@ namespace TicTacToe.MistakeProof
             _column = column;
         }
 
+        public override string ToString()
+        {
+            return $"{_row} {_column}";
+        }
+
         public static Position Parse(string text)
         {
             var parts = text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);

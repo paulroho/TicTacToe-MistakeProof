@@ -10,22 +10,22 @@ namespace ConsoleClientTests
         public void BasicScenario()
         {
             string expectedOutput = @"Player X turn:
-Player X moved middle middle
+Player X moved Middle Middle
 Player O turn:
-Player O moved top left
+Player O moved Top Left
 Player X turn:
-Player X moved top middle
+Player X moved Bottom Middle
 Player O turn:
-Player O moved top right
+Player O moved Top Right
 Player X turn:
-Player X moved bottom middle
+Player X moved Top Middle
 Player X wins!
 ";
             string inputText = @"m m
 t l
-t m
-t r
 b m
+t r
+t m
 ";
 
             var outStream = new StringWriter();
