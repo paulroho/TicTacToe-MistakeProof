@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Tests
 {
@@ -13,13 +14,16 @@ namespace Tests
             var after2 = after1.MoveO(At(Row.Top, Column.Left));
             var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
             var after4 = after3.MoveO(At(Row.Top, Column.Right));
+
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
-            after5.OnOngoingGame(after => { AssertFail(); });
-            after5.OnWonGame( won => {
-                Assert.Equal(Player.X, won.Winner);
-                Assert.True(won.HasEnded);
-            });
+            after5.OnOngoingOrWonGame(
+                ongoing => throw new XunitException(),
+                won =>
+                {
+                    Assert.Equal(Player.X, won.Winner);
+                    Assert.True(won.HasEnded);
+                });
         }
 
         [Fact]
@@ -30,10 +34,48 @@ namespace Tests
             var after2 = after1.MoveO(At(Row.Top, Column.Left));
             var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
             var after4 = after3.MoveO(At(Row.Top, Column.Middle));
+
             var after5 = after4.MoveX(At(Row.Top, Column.Right));
 
-            after5.OnOngoingGame(after => { Assert.False(after.HasEnded); });
-            after5.OnWonGame(won => { AssertFail(); });
+            after5.OnOngoingOrWonGame(
+                ongoing =>
+                {
+                    Assert.False(ongoing.HasEnded);
+                    return null;
+                }, 
+                won => { AssertFail(); });
+        }
+
+        [Fact]
+        public void MinimalGameWhereOWins()
+        {
+            // OOO
+            // .X.
+            // .XX
+            var game = new NewGame();
+            var after1 = game.MoveX(At(Row.Middle, Column.Middle));
+            var after2 = after1.MoveO(At(Row.Top, Column.Left));
+            var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
+            var after4 = after3.MoveO(At(Row.Top, Column.Middle));
+            var after5 = after4.MoveX(At(Row.Bottom, Column.Right));
+
+            var after6 = after5.OnOngoingOrWonGame(
+                ongoing =>
+                {
+                    return ongoing.MoveO(At(Row.Top, Column.Right));
+                },
+                won =>
+                {
+                    AssertFail();
+                });
+
+            after6.OnOngoingOrWonGame(
+                ongoing => throw new XunitException(),
+                won =>
+                {
+                    Assert.Equal(Player.O, won.Winner);
+                    Assert.True(won.HasEnded);
+                });
         }
 
         private void AssertFail()
@@ -81,6 +123,8 @@ namespace Tests
 
     public class GameAfterFourthMove
     {
+        public bool HasEnded => false;
+
         public GameAfterFifthMoveOrWonGame MoveX(Position position)
         {
             if (position.Equals(new Position(Row.Top, Column.Middle)))
@@ -91,20 +135,26 @@ namespace Tests
         }
     }
 
+    public class GameAfterFifthMove
+    {
+        public bool HasEnded => false;
+
+        public GameAfterSixthMoveOrWonGame MoveO(Position position)
+        {
+            return GameAfterSixthMoveOrWonGame.WonGame();
+        }
+    }
+
+    public class GameAfterSixthMove
+    {
+        public bool HasEnded => false;
+
+    }
+
     public class GameAfterFifthMoveOrWonGame
     {
-        private readonly GameAfterFifthMove _gameAfterFifthMove;
+        private readonly GameAfterFifthMove _ongoingGame;
         private readonly WonGame _wonGame;
-
-        private GameAfterFifthMoveOrWonGame(WonGame wonGame)
-        {
-            this._wonGame = wonGame;
-        }
-
-        private GameAfterFifthMoveOrWonGame(GameAfterFifthMove gameAfterFifthMove)
-        {
-            _gameAfterFifthMove = gameAfterFifthMove;
-        }
 
         public static GameAfterFifthMoveOrWonGame GameAfterFifthMove()
         {
@@ -113,41 +163,70 @@ namespace Tests
 
         public static GameAfterFifthMoveOrWonGame WonGame()
         {
-            return new GameAfterFifthMoveOrWonGame(new WonGame());
+            return new GameAfterFifthMoveOrWonGame(new WonGame(Player.X));
         }
 
-        public void OnWonGame(Action<WonGame> onWonGame)
+        private GameAfterFifthMoveOrWonGame(GameAfterFifthMove gameAfterFifthMove)
         {
+            _ongoingGame = gameAfterFifthMove ?? throw new ArgumentNullException(nameof(gameAfterFifthMove));
+        }
+
+        private GameAfterFifthMoveOrWonGame(WonGame wonGame)
+        {
+            _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
+        }
+
+        public GameAfterSixthMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterFifthMove, GameAfterSixthMoveOrWonGame> ongoingAction, Action<WonGame> wonAction)
+        {
+            // TODO check arguments not null
             if (_wonGame != null)
-                onWonGame(_wonGame);
+            {
+                wonAction(_wonGame);
+                return new GameAfterSixthMoveOrWonGame(_wonGame);
+            }
+            return ongoingAction(_ongoingGame);
         }
-
-        public void OnOngoingGame(Action<GameAfterFifthMove> game)
-        {
-            if (_gameAfterFifthMove != null)
-                game(_gameAfterFifthMove);
-        }
-
     }
 
-    public class GameAfterFifthMove
+    public class GameAfterSixthMoveOrWonGame
     {
-        public bool HasEnded
+        private readonly WonGame _wonGame;
+
+        public static GameAfterSixthMoveOrWonGame WonGame()
         {
-            get { return false; }
+            return new GameAfterSixthMoveOrWonGame(new WonGame(Player.O));
         }
+
+        public GameAfterSixthMoveOrWonGame(WonGame wonGame)
+        {
+            _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
+        }
+
+        public void OnOngoingOrWonGame(Action<GameAfterSixthMove> ongoingAction, Action<WonGame> wonAction)
+        {
+            if (_wonGame != null)
+            {
+                wonAction(_wonGame);
+                //return new GameAfterSixthMoveOrWonGame(_wonGame);
+            }
+            //return ongoingAction(_ongoingGame);
+        }
+
     }
 
     public class WonGame
     {
-        public Player Winner
+        public WonGame(Player winner)
         {
-            get { return Player.X; }
+            Winner = winner;
         }
+
+        public Player Winner { get; }
 
         public bool HasEnded
         {
             get { return true;  }
         }
     }
+
 }

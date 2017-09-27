@@ -2,6 +2,7 @@ namespace Tests
 {
     public enum Player
     {
-        X
+        X,
+        O
     }
 }
