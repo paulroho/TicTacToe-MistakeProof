@@ -1,6 +1,6 @@
 using System;
 
-namespace Tests
+namespace TicTacToe.MistakeProof
 {
     public class Position
     {

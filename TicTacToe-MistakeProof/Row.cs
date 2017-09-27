@@ -1,4 +1,4 @@
-namespace Tests
+namespace TicTacToe.MistakeProof
 {
     public enum Row
     {
