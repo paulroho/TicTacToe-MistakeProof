@@ -1,6 +1,5 @@
 using System;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Tests
 {
@@ -43,55 +42,11 @@ namespace Tests
         }
     }
 
-    public enum Column
-    {
-        Middle,
-        Left,
-        Right
-    }
-
-    public enum Row
-    {
-        Middle,
-        Top,
-        Bottom
-    }
-
     public class NewGame
     {
         public GameAfterOneMove MoveX(Position position)
         {
             return new GameAfterOneMove();
-        }
-    }
-
-    public class Position
-    {
-        private readonly Row row;
-        private readonly Column column;
-
-        public Position(Row row, Column column)
-        {
-            this.row = row;
-            this.column = column;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj) || obj.GetType() != this.GetType())
-            {
-                return false;
-            }
-            Position that = (Position) obj;
-            return this.row == that.row && this.column == that.column;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((int) row * 397) ^ (int) column;
-            }
         }
     }
 
@@ -187,10 +142,5 @@ namespace Tests
         {
             get { return true;  }
         }
-    }
-
-    public enum Player
-    {
-        X
     }
 }
