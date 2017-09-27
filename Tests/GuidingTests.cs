@@ -63,14 +63,8 @@ namespace Tests
             var after5 = after4.MoveX(At(Row.Bottom, Column.Right));
 
             var after6 = after5.OnOngoingOrWonGame(
-                ongoing =>
-                {
-                    return ongoing.MoveO(At(Row.Top, Column.Right));
-                },
-                won =>
-                {
-                    AssertFail();
-                });
+                ongoing => ongoing.MoveO(At(Row.Top, Column.Right)),
+                won => AssertFail());
 
             after6.OnOngoingOrWonGame(
                 ongoing => throw new XunitException(),
@@ -79,6 +73,40 @@ namespace Tests
                     Assert.Equal(Player.O, won.Winner);
                     Assert.True(won.HasEnded);
                 });
+        }
+
+        [Fact]
+        public void Draw()
+        {
+            // OOX
+            // XXO
+            // OXX
+            var game = new NewGame();
+            var after1 = game.MoveX(  At(Row.Middle, Column.Middle));
+            var after2 = after1.MoveO(At(Row.Top, Column.Left));
+            var after3 = after2.MoveX(At(Row.Top, Column.Right));
+            var after4 = after3.MoveO(At(Row.Top, Column.Middle));
+            var after5 = after4.MoveX(At(Row.Middle, Column.Left));
+
+            var after6 = after5.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveO(At(Row.Middle, Column.Right)),
+                won => AssertFail());
+
+            var after7 = after6.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveX(At(Row.Bottom, Column.Middle)),
+                won => AssertFail());
+
+            var after8 = after7.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveO(At(Row.Bottom, Column.Left)),
+                won => AssertFail());
+
+            var draw = after8.OnOngoingOrWonGame(
+                ongoing => ongoing.MoveX(At(Row.Bottom, Column.Right)),
+                won => AssertFail());
+
+            draw.OnDrawOrWonGame(
+                onDraw => Assert.True(onDraw.HasEnded),
+                won => AssertFail());
         }
 
         private void AssertFail()

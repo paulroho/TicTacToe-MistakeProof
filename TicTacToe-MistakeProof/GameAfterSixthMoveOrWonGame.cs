@@ -5,6 +5,12 @@ namespace TicTacToe.MistakeProof
     public class GameAfterSixthMoveOrWonGame
     {
         private readonly WonGame _wonGame;
+        private readonly GameAfterSixthMove _ongoingGame;
+
+        public static GameAfterSixthMoveOrWonGame GameAfterSixthMove()
+        {
+            return new GameAfterSixthMoveOrWonGame(new GameAfterSixthMove());
+        }
 
         public static GameAfterSixthMoveOrWonGame WonGame()
         {
@@ -16,14 +22,19 @@ namespace TicTacToe.MistakeProof
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public void OnOngoingOrWonGame(Action<GameAfterSixthMove> ongoingAction, Action<WonGame> wonAction)
+        private GameAfterSixthMoveOrWonGame(GameAfterSixthMove ongoingGame)
+        {
+            _ongoingGame = ongoingGame;
+        }
+
+        public GameAfterSeventhMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterSixthMove, GameAfterSeventhMoveOrWonGame> ongoingAction, Action<WonGame> wonAction)
         {
             if (_wonGame != null)
             {
                 wonAction(_wonGame);
-                //return new GameAfterSixthMoveOrWonGame(_wonGame);
+                return new GameAfterSeventhMoveOrWonGame(_wonGame);
             }
-            //return ongoingAction(_ongoingGame);
+            return ongoingAction(_ongoingGame);
         }
 
     }
