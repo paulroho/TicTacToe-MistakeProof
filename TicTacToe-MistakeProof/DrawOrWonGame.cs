@@ -4,17 +4,17 @@ namespace TicTacToe.MistakeProof
 {
     public class DrawOrWonGame
     {
-        private readonly WonGame _wonGame;
         private readonly DrawGame _drawGame;
-
-        public DrawOrWonGame(WonGame wonGame)
-        {
-            _wonGame = wonGame;
-        }
+        private readonly WonGame _wonGame;
 
         public DrawOrWonGame(DrawGame drawGame)
         {
-            _drawGame = drawGame;
+            _drawGame = drawGame ?? throw new ArgumentNullException(nameof(drawGame));
+        }
+
+        public DrawOrWonGame(WonGame wonGame)
+        {
+            _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
         public void OnDrawOrWonGame(Action<DrawGame> drawAction, Action<WonGame> wonAction)

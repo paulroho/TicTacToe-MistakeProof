@@ -9,9 +9,9 @@ namespace TicTacToe.MistakeProof
         private readonly GameAfterFifthMove _ongoingGame;
         private readonly WonGame _wonGame;
 
-        public GameAfterFifthMoveOrWonGame(GameAfterFifthMove gameAfterFifthMove)
+        public GameAfterFifthMoveOrWonGame(GameAfterFifthMove ongoingGame)
         {
-            _ongoingGame = gameAfterFifthMove ?? throw new ArgumentNullException(nameof(gameAfterFifthMove));
+            _ongoingGame = ongoingGame ?? throw new ArgumentNullException(nameof(ongoingGame));
         }
 
         public GameAfterFifthMoveOrWonGame(WonGame wonGame)
@@ -19,7 +19,7 @@ namespace TicTacToe.MistakeProof
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public GameAfterSixthMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterFifthMove, GameAfterSixthMoveOrWonGame> ongoingAction, Action<WonGame> wonAction)
+        public GameAfterSixthMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterFifthMove, GameAfterSixthMoveOrWonGame> ongoingFunc, Action<WonGame> wonAction)
         {
             // TODO check arguments not null
             if (_wonGame != null)
@@ -27,7 +27,7 @@ namespace TicTacToe.MistakeProof
                 _wonGame.CallBackOnce(wonAction);
                 return new GameAfterSixthMoveOrWonGame(_wonGame);
             }
-            return ongoingAction(_ongoingGame);
+            return ongoingFunc(_ongoingGame);
         }
     }
 }
