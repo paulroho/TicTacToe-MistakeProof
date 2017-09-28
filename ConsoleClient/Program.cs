@@ -39,28 +39,20 @@ namespace ConsoleClient
             var gameAfterFourthMove = gameAfterThirdMove.MoveO(PromptForPosition(Player.O));
             var gameAfterFifthMoveOrWonGame = gameAfterFourthMove.MoveX(PromptForPosition(Player.X));
             var gameAfterSixthMoveOrWonGame = gameAfterFifthMoveOrWonGame.OnOngoingOrWonGame(
-                ongoing =>
-                {
-                    return ongoing.MoveO(PromptForPosition(Player.O));
-                },
-                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+                ongoing => ongoing.MoveO(PromptForPosition(Player.O)),
+                ConfirmWinner);
             var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
-                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+                ConfirmWinner);
             var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveO(PromptForPosition(Player.O)),
-                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+                ConfirmWinner);
             var drawOrWonGame = gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
-                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
+                ConfirmWinner);
             drawOrWonGame.OnDrawOrWonGame(
                 draw => _outStream.WriteLine("Draw!"),
-                won => _outStream.WriteLine($"Player {won.Winner} wins!"));
-        }
-
-        private void PromptPlayerTurn(Player player)
-        {
-            _outStream.WriteLine($"Player {player} turn:");
+                ConfirmWinner);
         }
 
         private Position PromptForPosition(Player player)
@@ -71,9 +63,9 @@ namespace ConsoleClient
             return position;
         }
 
-        private void ConfirmPosition(Player player, Position position)
+        private void PromptPlayerTurn(Player player)
         {
-            _outStream.WriteLine($"Player {player} moved {position}");
+            _outStream.WriteLine($"Player {player} turn:");
         }
 
         private Position ReadPosition()
@@ -81,5 +73,16 @@ namespace ConsoleClient
             var line = _inStream.ReadLine();
             return Position.Parse(line);
         }
+
+        private void ConfirmPosition(Player player, Position position)
+        {
+            _outStream.WriteLine($"Player {player} moved {position}");
+        }
+
+        private void ConfirmWinner(WonGame won)
+        {
+            _outStream.WriteLine($"Player {won.Winner} wins!");
+        }
+
     }
 }
