@@ -4,7 +4,7 @@ namespace TicTacToe.MistakeProof
     {
         public bool HasEnded => false;
 
-        public GameAfterSeventhMoveOrWonGame MoveX(Position promptForPosition)
+        public GameAfterSeventhMoveOrWonGame MoveX(Position position)
         {
             return new GameAfterSeventhMoveOrWonGame(new GameAfterSeventhMove());
         }

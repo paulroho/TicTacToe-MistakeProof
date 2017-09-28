@@ -13,14 +13,11 @@ namespace TicTacToe.MistakeProof
             Winner = winner;
         }
 
+        public bool HasEnded = true;
+
         public Player Winner { get; }
 
-        public bool HasEnded
-        {
-            get { return true;  }
-        }
-
-        public void CallBackOnce(Action<WonGame> wonAction)
+        internal void CallBackOnce(Action<WonGame> wonAction)
         {
             if (_once)
             {
