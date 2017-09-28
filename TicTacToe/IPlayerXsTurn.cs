@@ -1,7 +1,8 @@
 ﻿namespace TicTacToe
 {
-    public interface IPlayerXsTurn<T>
+    public interface IPlayerXsTurn<out T> : IAnyPlayersTurn
     {
         T MoveX(Position position);
+
     }
 }

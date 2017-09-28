@@ -11,6 +11,8 @@ namespace TicTacToe
             _wonAction = wonAction;
         }
 
+        public bool HasEnded => false;
+
         public GameAfterOneMove MoveX(Position position)
         {
             // TODO capture position

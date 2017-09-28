@@ -2,7 +2,7 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterEighthMoveOrWonGame
+    public class GameAfterEighthMoveOrWonGame : IOngoingGameX<DrawOrWonGame>
     {
         private readonly GameAfterEighthMove _ongoingGame;
         private readonly WonGame _wonGame;
@@ -17,7 +17,7 @@ namespace TicTacToe
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public DrawOrWonGame OnOngoingGame(Func<GameAfterEighthMove, DrawOrWonGame> ongoingFunc)
+        public DrawOrWonGame OnOngoingGame(Func<IPlayerXsTurn<DrawOrWonGame>, DrawOrWonGame> ongoingFunc)
         {
             if (_wonGame != null)
             {

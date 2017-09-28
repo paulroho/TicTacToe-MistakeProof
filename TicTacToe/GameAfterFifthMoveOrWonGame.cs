@@ -2,7 +2,7 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterFifthMoveOrWonGame
+    public class GameAfterFifthMoveOrWonGame : IOngoingGameO<GameAfterSixthMoveOrWonGame>
     {
         // complete
         // TODO mayme make generic in GameAfterFifthMove
@@ -19,7 +19,7 @@ namespace TicTacToe
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public GameAfterSixthMoveOrWonGame OnOngoingGame(Func<GameAfterFifthMove, GameAfterSixthMoveOrWonGame> ongoingFunc)
+        public GameAfterSixthMoveOrWonGame OnOngoingGame(Func<IPlayerOsTurn<GameAfterSixthMoveOrWonGame>, GameAfterSixthMoveOrWonGame> ongoingFunc)
         {
             // TODO check arguments not null
             if (_wonGame != null)
