@@ -24,7 +24,7 @@ namespace TicTacToe.Tests
 
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
-            after5.OnOngoingOrWonGame(
+            after5.OnOngoingGame(
                 ongoing => throw new XunitException());
         }
 
@@ -39,7 +39,7 @@ namespace TicTacToe.Tests
 
             var after5 = after4.MoveX(At(Row.Top, Column.Right));
 
-            after5.OnOngoingOrWonGame(
+            after5.OnOngoingGame(
                 ongoing =>
                 {
                     Assert.False(ongoing.HasEnded);
@@ -64,10 +64,10 @@ namespace TicTacToe.Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Middle));
             var after5 = after4.MoveX(At(Row.Bottom, Column.Right));
 
-            var after6 = after5.OnOngoingOrWonGame(
+            var after6 = after5.OnOngoingGame(
                 ongoing => ongoing.MoveO(At(Row.Top, Column.Right)));
 
-            after6.OnOngoingOrWonGame(
+            after6.OnOngoingGame(
                 ongoing => throw new XunitException());
         }
 
@@ -83,16 +83,16 @@ namespace TicTacToe.Tests
             var after3 = after2.MoveX(At(Row.Top, Column.Right));
             var after4 = after3.MoveO(At(Row.Top, Column.Middle));
             var after5 = after4.MoveX(At(Row.Middle, Column.Left));
-            var after6 = after5.OnOngoingOrWonGame(
+            var after6 = after5.OnOngoingGame(
                 ongoing => ongoing.MoveO(At(Row.Middle, Column.Right)));
-            var after7 = after6.OnOngoingOrWonGame(
+            var after7 = after6.OnOngoingGame(
                 ongoing => ongoing.MoveX(At(Row.Bottom, Column.Middle)));
-            var after8 = after7.OnOngoingOrWonGame(
+            var after8 = after7.OnOngoingGame(
                 ongoing => ongoing.MoveO(At(Row.Bottom, Column.Left)));
-            var draw = after8.OnOngoingOrWonGame(
+            var draw = after8.OnOngoingGame(
                 ongoing => ongoing.MoveX(At(Row.Bottom, Column.Right)));
 
-            draw.OnDrawOrWonGame(
+            draw.OnDrawGame(
                 onDraw => Assert.True(onDraw.HasEnded));
         }
 
@@ -106,12 +106,12 @@ namespace TicTacToe.Tests
             var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
             var after4 = after3.MoveO(At(Row.Top, Column.Right));
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
-            var afterWin = after5.OnOngoingOrWonGame(
+            var afterWin = after5.OnOngoingGame(
                 ongoing => throw new XunitException());
 
             winCount.Should().Be(1);
 
-            afterWin.OnOngoingOrWonGame(
+            afterWin.OnOngoingGame(
                 ongoing => throw new XunitException());
 
             winCount.Should().Be(1);

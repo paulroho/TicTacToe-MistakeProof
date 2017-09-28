@@ -17,7 +17,7 @@ namespace TicTacToe
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public GameAfterEighthMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterSeventhMove, GameAfterEighthMoveOrWonGame> ongoingFunc)
+        public GameAfterEighthMoveOrWonGame OnOngoingGame(Func<GameAfterSeventhMove, GameAfterEighthMoveOrWonGame> ongoingFunc)
         {
             if (_wonGame != null)
             {

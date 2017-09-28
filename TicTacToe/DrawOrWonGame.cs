@@ -17,7 +17,7 @@ namespace TicTacToe
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public void OnDrawOrWonGame(Action<DrawGame> drawAction)
+        public void OnDrawGame(Action<DrawGame> drawAction)
         {
             if (_wonGame != null)
             {

@@ -38,11 +38,11 @@ namespace ConsoleClient
             var gameAfter3Move = TurnPlayerX(gameAfter2Move);
             var gameAfter4Move = TurnPlayerO(gameAfter3Move);
             var gameAfter5MoveOrWonGame = TurnPlayerX(gameAfter4Move);
-            var gameAfter6MoveOrWonGame = gameAfter5MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerO);
-            var gameAfter7MoveOrWonGame = gameAfter6MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerX);
-            var gameAfter8MoveOrWonGame = gameAfter7MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerO);
-            var drawOrWonGame = gameAfter8MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerX);
-            drawOrWonGame.OnDrawOrWonGame(ConfirmDraw);
+            var gameAfter6MoveOrWonGame = gameAfter5MoveOrWonGame.OnOngoingGame(TurnPlayerO);
+            var gameAfter7MoveOrWonGame = gameAfter6MoveOrWonGame.OnOngoingGame(TurnPlayerX);
+            var gameAfter8MoveOrWonGame = gameAfter7MoveOrWonGame.OnOngoingGame(TurnPlayerO);
+            var drawOrWonGame = gameAfter8MoveOrWonGame.OnOngoingGame(TurnPlayerX);
+            drawOrWonGame.OnDrawGame(ConfirmDraw);
         }
 
         private T TurnPlayerX<T>(IPlayerXsTurn<T> game)
