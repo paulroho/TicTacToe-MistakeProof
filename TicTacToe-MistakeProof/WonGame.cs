@@ -1,8 +1,12 @@
+using System;
+
 namespace TicTacToe.MistakeProof
 {
     public class WonGame
     {
         // TODO capture previous state for queries, else complete
+
+        private bool _once = true;
 
         public WonGame(Player winner)
         {
@@ -14,6 +18,15 @@ namespace TicTacToe.MistakeProof
         public bool HasEnded
         {
             get { return true;  }
+        }
+
+        public void CallBackOnce(Action<WonGame> wonAction)
+        {
+            if (_once)
+            {
+                wonAction(this);
+                _once = false;
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TicTacToe.MistakeProof
             // TODO check arguments not null
             if (_wonGame != null)
             {
-                wonAction(_wonGame);
+                _wonGame.CallBackOnce(wonAction);
                 return new GameAfterSixthMoveOrWonGame(_wonGame);
             }
             return ongoingAction(_ongoingGame);
