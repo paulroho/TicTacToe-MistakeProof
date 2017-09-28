@@ -24,14 +24,13 @@ namespace TicTacToe.Tests
 
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
 
-            after5.OnOngoingGame(
-                ongoing => throw new XunitException());
+            after5.OnOngoingGame(ongoing => throw new XunitException("Game did not stop after Win."));
         }
 
         [Fact]
         public void GameOfFiveMovesNoWinnerYet()
         {
-            var game = new NewGame(wonGame => AssertFail());
+            var game = new NewGame(wonGame => throw new XunitException("Game won unexpectedly."));
             var after1 = game.MoveX(At(Row.Middle, Column.Middle));
             var after2 = after1.MoveO(At(Row.Top, Column.Left));
             var after3 = after2.MoveX(At(Row.Bottom, Column.Middle));
@@ -67,8 +66,7 @@ namespace TicTacToe.Tests
             var after6 = after5.OnOngoingGame(
                 ongoing => ongoing.MoveO(At(Row.Top, Column.Right)));
 
-            after6.OnOngoingGame(
-                ongoing => throw new XunitException());
+            after6.OnOngoingGame(ongoing => throw new XunitException("Game did not stop after Win."));
         }
 
         [Fact]
@@ -77,7 +75,7 @@ namespace TicTacToe.Tests
             // OOX
             // XXO
             // OXX
-            var game = new NewGame(won => AssertFail());
+            var game = new NewGame(wonGame => throw new XunitException("Game won unexpectedly."));
             var after1 = game.MoveX(  At(Row.Middle, Column.Middle));
             var after2 = after1.MoveO(At(Row.Top, Column.Left));
             var after3 = after2.MoveX(At(Row.Top, Column.Right));
@@ -107,19 +105,14 @@ namespace TicTacToe.Tests
             var after4 = after3.MoveO(At(Row.Top, Column.Right));
             var after5 = after4.MoveX(At(Row.Top, Column.Middle));
             var afterWin = after5.OnOngoingGame(
-                ongoing => throw new XunitException());
+                ongoing => throw new XunitException("Game did not stop after Win."));
 
             winCount.Should().Be(1);
 
             afterWin.OnOngoingGame(
-                ongoing => throw new XunitException());
+                ongoing => throw new XunitException("Game did not stop after Win."));
 
             winCount.Should().Be(1);
-        }
-
-        private void AssertFail()
-        {
-            Assert.True(false);
         }
 
         private Position At(Row row, Column column)
