@@ -13,6 +13,7 @@ namespace TicTacToe
 
         public Position(Row row, Column column)
         {
+            // Enums in C# cannot be null
             _row = row;
             _column = column;
         }

@@ -9,7 +9,7 @@ namespace TicTacToe
 
         private bool _once = true;
 
-        public WonGame(Action<WonGame> wonAction, Player winner)
+        internal WonGame(Action<WonGame> wonAction, Player winner)
         {
             _wonAction = wonAction;
             Winner = winner;

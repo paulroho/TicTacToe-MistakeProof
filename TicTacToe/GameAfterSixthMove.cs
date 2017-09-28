@@ -2,14 +2,15 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterSixthMove : WinnableGame, IPlayerXsTurn<GameAfterSeventhMoveOrWonGame>
+    public class GameAfterSixthMove : RunningGame, IPlayerXsTurn<GameAfterSeventhMoveOrWonGame>
     {
-        public GameAfterSixthMove(Action<WonGame> wonAction)
+        internal GameAfterSixthMove(Action<WonGame> wonAction)
             : base(wonAction)
         { }
     
         public GameAfterSeventhMoveOrWonGame MoveX(Position position)
         {
+            Record(position);
             return new GameAfterSeventhMoveOrWonGame(new GameAfterSeventhMove(_wonAction));
         }
     }

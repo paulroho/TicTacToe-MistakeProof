@@ -2,20 +2,15 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterSecondMove : IPlayerXsTurn<GameAfterThirdMove>
+    public class GameAfterSecondMove : RunningGame, IPlayerXsTurn<GameAfterThirdMove>
     {
-        private readonly Action<WonGame> _wonAction;
-
-        public GameAfterSecondMove(Action<WonGame> wonAction)
-        {
-            _wonAction = wonAction;
-        }
-
-        public bool HasEnded => false;
+        internal GameAfterSecondMove(Action<WonGame> wonAction)
+            : base(wonAction)
+        { }
 
         public GameAfterThirdMove MoveX(Position position)
         {
-            // TODO capture position
+            Record(position);
             return new GameAfterThirdMove(_wonAction);
         }
     }

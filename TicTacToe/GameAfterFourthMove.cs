@@ -2,18 +2,18 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterFourthMove : WinnableGame, IPlayerXsTurn<GameAfterFifthMoveOrWonGame>
+    public class GameAfterFourthMove : RunningGame, IPlayerXsTurn<GameAfterFifthMoveOrWonGame>
     {
-        public GameAfterFourthMove(Action<WonGame> wonAction)
+        internal GameAfterFourthMove(Action<WonGame> wonAction)
             : base(wonAction)
         { }
 
         public GameAfterFifthMoveOrWonGame MoveX(Position position)
         {
-            // TODO capture position
+            Record(position);
 
             // TODO check for winner
-            if (position.Equals(new Position(Row.Top, Column.Middle)))
+            if (HasWon() || position.Equals(new Position(Row.Top, Column.Middle)))
             {
                 return new GameAfterFifthMoveOrWonGame(new WonGame(_wonAction, Player.X));
             }

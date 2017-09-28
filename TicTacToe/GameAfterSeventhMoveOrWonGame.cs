@@ -7,12 +7,12 @@ namespace TicTacToe
         private readonly GameAfterSeventhMove _ongoingGame;
         private readonly WonGame _wonGame;
 
-        public GameAfterSeventhMoveOrWonGame(GameAfterSeventhMove ongoingGame)
+        internal GameAfterSeventhMoveOrWonGame(GameAfterSeventhMove ongoingGame)
         {
             _ongoingGame = ongoingGame ?? throw new ArgumentNullException(nameof(ongoingGame));
         }
 
-        public GameAfterSeventhMoveOrWonGame(WonGame wonGame)
+        internal GameAfterSeventhMoveOrWonGame(WonGame wonGame)
         {
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
