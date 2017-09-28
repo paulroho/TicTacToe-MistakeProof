@@ -6,7 +6,7 @@ namespace TicTacToe.MistakeProof
 
         public GameAfterSeventhMoveOrWonGame MoveX(Position promptForPosition)
         {
-            return GameAfterSeventhMoveOrWonGame.GameAfterSeventhMove();
+            return new GameAfterSeventhMoveOrWonGame(new GameAfterSeventhMove());
         }
     }
 }

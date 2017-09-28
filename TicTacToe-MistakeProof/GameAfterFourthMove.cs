@@ -9,10 +9,10 @@ namespace TicTacToe.MistakeProof
             // TODO check for winner
             if (position.Equals(new Position(Row.Top, Column.Middle)))
             {
-                return GameAfterFifthMoveOrWonGame.WonGame();
+                return new GameAfterFifthMoveOrWonGame(new WonGame(Player.X));
             }
             // TODO capture position
-            return GameAfterFifthMoveOrWonGame.GameAfterFifthMove();
+            return new GameAfterFifthMoveOrWonGame(new GameAfterFifthMove());
         }
     }
 }

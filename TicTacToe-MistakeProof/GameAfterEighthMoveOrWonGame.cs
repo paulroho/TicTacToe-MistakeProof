@@ -12,14 +12,9 @@ namespace TicTacToe.MistakeProof
             _wonGame = wonGame;
         }
 
-        private GameAfterEighthMoveOrWonGame(GameAfterEighthMove ongoingGame)
+        public GameAfterEighthMoveOrWonGame(GameAfterEighthMove ongoingGame)
         {
             _ongoingGame = ongoingGame;
-        }
-
-        public static GameAfterEighthMoveOrWonGame GameAfterEighthMove()
-        {
-            return new GameAfterEighthMoveOrWonGame(new GameAfterEighthMove());
         }
 
         public DrawOrWonGame OnOngoingOrWonGame(Func<GameAfterEighthMove, DrawOrWonGame> ongoingAction, Action<WonGame> wonAction)

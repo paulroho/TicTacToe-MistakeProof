@@ -7,8 +7,8 @@ namespace TicTacToe.MistakeProof
         public GameAfterSixthMoveOrWonGame MoveO(Position position)
         {
             if (Equals(position, new Position(Row.Top, Column.Right)))
-                return GameAfterSixthMoveOrWonGame.WonGame();
-            return GameAfterSixthMoveOrWonGame.GameAfterSixthMove();
+                return new GameAfterSixthMoveOrWonGame(new WonGame(Player.O));
+            return new GameAfterSixthMoveOrWonGame(new GameAfterSixthMove());
         }
     }
 }

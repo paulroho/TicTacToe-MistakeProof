@@ -4,7 +4,7 @@ namespace TicTacToe.MistakeProof
     {
         public GameAfterEighthMoveOrWonGame MoveO(Position position)
         {
-            return GameAfterEighthMoveOrWonGame.GameAfterEighthMove();
+            return new GameAfterEighthMoveOrWonGame(new GameAfterEighthMove());
         }
     }
 }

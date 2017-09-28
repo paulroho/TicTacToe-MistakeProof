@@ -7,22 +7,12 @@ namespace TicTacToe.MistakeProof
         private readonly GameAfterSeventhMove _ongoingGame;
         private readonly WonGame _wonGame;
 
-        public static GameAfterSeventhMoveOrWonGame GameAfterSeventhMove()
-        {
-            return new GameAfterSeventhMoveOrWonGame(new GameAfterSeventhMove());
-        }
-
-        public static GameAfterSeventhMoveOrWonGame WonGame()
-        {
-            return new GameAfterSeventhMoveOrWonGame(new WonGame(Player.X));
-        }
-
-        private GameAfterSeventhMoveOrWonGame(GameAfterSeventhMove gameAfterFifthMove)
+        public GameAfterSeventhMoveOrWonGame(GameAfterSeventhMove gameAfterFifthMove)
         {
             _ongoingGame = gameAfterFifthMove ?? throw new ArgumentNullException(nameof(gameAfterFifthMove));
         }
 
-        internal GameAfterSeventhMoveOrWonGame(WonGame wonGame)
+        public GameAfterSeventhMoveOrWonGame(WonGame wonGame)
         {
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
