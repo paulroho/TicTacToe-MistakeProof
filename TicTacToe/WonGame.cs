@@ -4,12 +4,14 @@ namespace TicTacToe
 {
     public class WonGame
     {
+        private readonly Action<WonGame> _wonAction;
         // TODO capture previous state for queries, else complete
 
         private bool _once = true;
 
-        public WonGame(Player winner)
+        public WonGame(Action<WonGame> wonAction, Player winner)
         {
+            _wonAction = wonAction;
             Winner = winner;
         }
 
@@ -17,11 +19,11 @@ namespace TicTacToe
 
         public Player Winner { get; }
 
-        internal void CallBackOnce(Action<WonGame> wonAction)
+        internal void NotifyWin()
         {
             if (_once)
             {
-                wonAction(this);
+                _wonAction(this);
                 _once = false;
             }
         }

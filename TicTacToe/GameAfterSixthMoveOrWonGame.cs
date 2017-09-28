@@ -17,11 +17,11 @@ namespace TicTacToe
             _wonGame = wonGame ?? throw new ArgumentNullException(nameof(wonGame));
         }
 
-        public GameAfterSeventhMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterSixthMove, GameAfterSeventhMoveOrWonGame> ongoingFunc, Action<WonGame> wonAction)
+        public GameAfterSeventhMoveOrWonGame OnOngoingOrWonGame(Func<GameAfterSixthMove, GameAfterSeventhMoveOrWonGame> ongoingFunc)
         {
             if (_wonGame != null)
             {
-                _wonGame.CallBackOnce(wonAction);
+                _wonGame.NotifyWin();
                 return new GameAfterSeventhMoveOrWonGame(_wonGame);
             }
             return ongoingFunc(_ongoingGame);

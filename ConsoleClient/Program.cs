@@ -32,27 +32,22 @@ namespace ConsoleClient
 
         public void PlayGame()
         {
-            var game = new NewGame();
+            var game = new NewGame(ConfirmWinner);
             var gameAfterOneMove = game.MoveX(PromptForPosition(Player.X));
             var gameAfterSecondMove = gameAfterOneMove.MoveO(PromptForPosition(Player.O));
             var gameAfterThirdMove = gameAfterSecondMove.MoveX(PromptForPosition(Player.X));
             var gameAfterFourthMove = gameAfterThirdMove.MoveO(PromptForPosition(Player.O));
             var gameAfterFifthMoveOrWonGame = gameAfterFourthMove.MoveX(PromptForPosition(Player.X));
             var gameAfterSixthMoveOrWonGame = gameAfterFifthMoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveO(PromptForPosition(Player.O)),
-                ConfirmWinner);
+                ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
             var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
-                ConfirmWinner);
+                ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
             var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveO(PromptForPosition(Player.O)),
-                ConfirmWinner);
+                ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
             var drawOrWonGame = gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveX(PromptForPosition(Player.X)),
-                ConfirmWinner);
+                ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
             drawOrWonGame.OnDrawOrWonGame(
-                draw => _outStream.WriteLine("Draw!"),
-                ConfirmWinner);
+                draw => ConfirmDraw());
         }
 
         private Position PromptForPosition(Player player)
@@ -84,5 +79,9 @@ namespace ConsoleClient
             _outStream.WriteLine($"Player {won.Winner} wins!");
         }
 
+        private void ConfirmDraw()
+        {
+            _outStream.WriteLine("Draw!");
+        }
     }
 }
