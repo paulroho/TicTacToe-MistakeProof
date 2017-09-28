@@ -2,14 +2,11 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterSeventhMove
+    public class GameAfterSeventhMove : WinnableGame
     {
-        private readonly Action<WonGame> _wonAction;
-
         public GameAfterSeventhMove(Action<WonGame> wonAction)
-        {
-            _wonAction = wonAction;
-        }
+            : base(wonAction)
+        { }
 
         public GameAfterEighthMoveOrWonGame MoveO(Position position)
         {

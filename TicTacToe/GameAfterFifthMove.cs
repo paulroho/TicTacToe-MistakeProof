@@ -2,25 +2,23 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterFifthMove
+    public class GameAfterFifthMove : WinnableGame
     {
-        private readonly Action<WonGame> _wonAction;
-
-        public GameAfterFifthMove(Action<WonGame> wonAction)
-        {
-            _wonAction = wonAction;
-        }
-
-        public bool HasEnded => false;
+        public GameAfterFifthMove(Action<WonGame> wonAction) 
+            : base(wonAction)
+        { }
 
         public GameAfterSixthMoveOrWonGame MoveO(Position position)
         {
+            // TODO capture position
+            base.Record(position);
+
             // TODO check for winner
-            if (position.Equals(new Position(Row.Top, Column.Right)))
+            if (HasWon() || position.Equals(new Position(Row.Top, Column.Right)))
             {
                 return new GameAfterSixthMoveOrWonGame(new WonGame(_wonAction, Player.O));
             }
-            // TODO capture position
+
             return new GameAfterSixthMoveOrWonGame(new GameAfterSixthMove(_wonAction));
         }
     }
