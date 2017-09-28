@@ -33,18 +33,18 @@ namespace ConsoleClient
         public void PlayGame()
         {
             var game = new NewGame(ConfirmWinner);
-            var gameAfterOneMove = game.MoveX(PromptForPosition(Player.X));
-            var gameAfterSecondMove = gameAfterOneMove.MoveO(PromptForPosition(Player.O));
-            var gameAfterThirdMove = gameAfterSecondMove.MoveX(PromptForPosition(Player.X));
-            var gameAfterFourthMove = gameAfterThirdMove.MoveO(PromptForPosition(Player.O));
-            var gameAfterFifthMoveOrWonGame = gameAfterFourthMove.MoveX(PromptForPosition(Player.X));
-            var gameAfterSixthMoveOrWonGame = gameAfterFifthMoveOrWonGame.OnOngoingOrWonGame(
+            var gameAfter1Move = game.MoveX(PromptForPosition(Player.X));
+            var gameAfter2Move = gameAfter1Move.MoveO(PromptForPosition(Player.O));
+            var gameAfter3Move = gameAfter2Move.MoveX(PromptForPosition(Player.X));
+            var gameAfter4Move = gameAfter3Move.MoveO(PromptForPosition(Player.O));
+            var gameAfter5MoveOrWonGame = gameAfter4Move.MoveX(PromptForPosition(Player.X));
+            var gameAfter6MoveOrWonGame = gameAfter5MoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
-            var gameAfterSeventhMoveOrWonGame = gameAfterSixthMoveOrWonGame.OnOngoingOrWonGame(
+            var gameAfter7MoveOrWonGame = gameAfter6MoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
-            var gameAfterEightMoveOrWonGame = gameAfterSeventhMoveOrWonGame.OnOngoingOrWonGame(
+            var gameAfter8MoveOrWonGame = gameAfter7MoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
-            var drawOrWonGame = gameAfterEightMoveOrWonGame.OnOngoingOrWonGame(
+            var drawOrWonGame = gameAfter8MoveOrWonGame.OnOngoingOrWonGame(
                 ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
             drawOrWonGame.OnDrawOrWonGame(
                 draw => ConfirmDraw());
