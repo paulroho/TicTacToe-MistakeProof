@@ -22,6 +22,7 @@ namespace TicTacToe.MistakeProof
             if (_wonGame != null)
             {
                 _wonGame.CallBackOnce(wonAction);
+                return;
             }
             drawAction(_drawGame);
         }
