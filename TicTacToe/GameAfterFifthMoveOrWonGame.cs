@@ -21,7 +21,9 @@ namespace TicTacToe
 
         public GameAfterSixthMoveOrWonGame OnOngoingGame(Func<IPlayerOsTurn<GameAfterSixthMoveOrWonGame>, GameAfterSixthMoveOrWonGame> ongoingFunc)
         {
-            // TODO check arguments not null
+            if (ongoingFunc == null)
+                throw new ArgumentNullException(nameof(ongoingFunc));
+
             if (_wonGame != null)
             {
                 _wonGame.NotifyWin();

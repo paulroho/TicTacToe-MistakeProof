@@ -19,6 +19,9 @@ namespace TicTacToe
 
         public void OnDrawGame(Action<DrawGame> drawAction)
         {
+            if (drawAction == null)
+                throw new ArgumentNullException(nameof(drawAction));
+
             if (_wonGame != null)
             {
                 _wonGame.NotifyWin();
