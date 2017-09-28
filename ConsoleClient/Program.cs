@@ -33,21 +33,26 @@ namespace ConsoleClient
         public void PlayGame()
         {
             var game = new NewGame(ConfirmWinner);
-            var gameAfter1Move = game.MoveX(PromptForPosition(Player.X));
-            var gameAfter2Move = gameAfter1Move.MoveO(PromptForPosition(Player.O));
-            var gameAfter3Move = gameAfter2Move.MoveX(PromptForPosition(Player.X));
-            var gameAfter4Move = gameAfter3Move.MoveO(PromptForPosition(Player.O));
-            var gameAfter5MoveOrWonGame = gameAfter4Move.MoveX(PromptForPosition(Player.X));
-            var gameAfter6MoveOrWonGame = gameAfter5MoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
-            var gameAfter7MoveOrWonGame = gameAfter6MoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
-            var gameAfter8MoveOrWonGame = gameAfter7MoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveO(PromptForPosition(Player.O)));
-            var drawOrWonGame = gameAfter8MoveOrWonGame.OnOngoingOrWonGame(
-                ongoing => ongoing.MoveX(PromptForPosition(Player.X)));
-            drawOrWonGame.OnDrawOrWonGame(
-                draw => ConfirmDraw());
+            var gameAfter1Move = TurnPlayerX(game);
+            var gameAfter2Move = TurnPlayerO(gameAfter1Move);
+            var gameAfter3Move = TurnPlayerX(gameAfter2Move);
+            var gameAfter4Move = TurnPlayerO(gameAfter3Move);
+            var gameAfter5MoveOrWonGame = TurnPlayerX(gameAfter4Move);
+            var gameAfter6MoveOrWonGame = gameAfter5MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerO);
+            var gameAfter7MoveOrWonGame = gameAfter6MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerX);
+            var gameAfter8MoveOrWonGame = gameAfter7MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerO);
+            var drawOrWonGame = gameAfter8MoveOrWonGame.OnOngoingOrWonGame(TurnPlayerX);
+            drawOrWonGame.OnDrawOrWonGame(ConfirmDraw);
+        }
+
+        private T TurnPlayerX<T>(IPlayerXsTurn<T> game)
+        {
+            return game.MoveX(PromptForPosition(Player.X));
+        }
+
+        private T TurnPlayerO<T>(IPlayerOsTurn<T> game)
+        {
+            return game.MoveO(PromptForPosition(Player.O));
         }
 
         private Position PromptForPosition(Player player)
@@ -79,7 +84,7 @@ namespace ConsoleClient
             _outStream.WriteLine($"Player {won.Winner} wins!");
         }
 
-        private void ConfirmDraw()
+        private void ConfirmDraw(DrawGame draw)
         {
             _outStream.WriteLine("Draw!");
         }

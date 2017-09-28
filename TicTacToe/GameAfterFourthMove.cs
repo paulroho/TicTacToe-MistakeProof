@@ -2,7 +2,7 @@ using System;
 
 namespace TicTacToe
 {
-    public class GameAfterFourthMove : WinnableGame
+    public class GameAfterFourthMove : WinnableGame, IPlayerXsTurn<GameAfterFifthMoveOrWonGame>
     {
         public GameAfterFourthMove(Action<WonGame> wonAction)
             : base(wonAction)

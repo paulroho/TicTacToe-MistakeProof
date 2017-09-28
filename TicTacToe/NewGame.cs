@@ -2,7 +2,7 @@ using System;
 
 namespace TicTacToe
 {
-    public class NewGame
+    public class NewGame : IPlayerXsTurn<GameAfterOneMove>
     {
         private readonly Action<WonGame> _wonAction;
 
