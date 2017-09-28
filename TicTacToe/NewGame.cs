@@ -1,4 +1,4 @@
-namespace TicTacToe.MistakeProof
+namespace TicTacToe
 {
     public class NewGame
     {

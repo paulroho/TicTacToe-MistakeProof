@@ -1,6 +1,6 @@
 using System;
 
-namespace TicTacToe.MistakeProof
+namespace TicTacToe
 {
     public class GameAfterSeventhMoveOrWonGame
     {

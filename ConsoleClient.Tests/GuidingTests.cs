@@ -2,7 +2,7 @@ using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace ConsoleClientTests
+namespace ConsoleClient.Tests
 {
     public class GuidingTests
     {

@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
-using TicTacToe.MistakeProof;
 using Xunit;
 
-namespace Tests
+namespace TicTacToe.Tests
 {
     public class PositionTests
     {

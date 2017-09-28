@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <RootNamespace>TicTacToe.MistakeProof</RootNamespace>
+    <RootNamespace>TicTacToe</RootNamespace>
   </PropertyGroup>
 
 </Project>

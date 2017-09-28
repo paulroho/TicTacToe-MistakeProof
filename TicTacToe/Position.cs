@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace TicTacToe.MistakeProof
+namespace TicTacToe
 {
     public class Position
     {

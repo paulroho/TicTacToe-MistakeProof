@@ -1,8 +1,7 @@
-using TicTacToe.MistakeProof;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Tests
+namespace TicTacToe.Tests
 {
     public class GuidingTests
     {
