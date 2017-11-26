@@ -1,4 +1,6 @@
-﻿http://blog.tmorris.net/posts/understanding-practical-api-design-static-typing-and-functional-programming/
+﻿> Refer to https://bitbucket.org/pkofler/tictactoe-mistakeproof-java for a **Java** version.
+
+This example is inspired by ﻿http://blog.tmorris.net/posts/understanding-practical-api-design-static-typing-and-functional-programming/
 
 ## Constraints
 
