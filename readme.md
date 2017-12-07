@@ -24,6 +24,7 @@ In the post Tony gives the assignment to write the API for the game of [Tic-Tac-
 ## Tony's Constraint to make the API Mistake Proof
 
 So I set some rules, but without further explanation of why these rules existed:
+
 * If you write a function, I must be able to call it with the same arguments and always get the same results, forever.
 * If I, as a client of your API, call one of your functions, I should always get a sensible result. Not null or an exception or other backdoors that cause the death of millions of kittens worldwide.
 * If I call move on a tic-tac-toe board, but the game has finished, I should get a compile-time type-error. In other words, calling move on inappropriate game states (i.e. move doesn't make sense) is disallowed by the types.
@@ -34,8 +35,8 @@ So I set some rules, but without further explanation of why these rules existed:
 
 ## Code
 
-* This repository contains the C# (.NET Core) code.
-* Refer to [Peter's Bitbucket for a Java version](https://bitbucket.org/pkofler/tictactoe-mistakeproof-java).
+* This repository contains the original C# (.NET Core) code.
+* Refer to [Peter's Bitbucket port for Java](https://bitbucket.org/pkofler/tictactoe-mistakeproof-java).
 
 ### License
 [New BSD License](http://opensource.org/licenses/bsd-license.php), see `license.txt` in repository.
