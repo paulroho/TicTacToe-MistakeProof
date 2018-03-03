@@ -14,7 +14,7 @@ In the post Tony gives the assignment to write the API for the game of [Tic-Tac-
     * Implement a two player game.
     * Determine who is the winner.
 
-* The API alloes to:
+* The API allows to:
     * I can start a new game
     * I should be able to call various functions on a game board that is in any state of play, e.g. `IsPositionOccupied` or `HasEnded`.
     * I can make a move.
@@ -37,6 +37,7 @@ So I set some rules, but without further explanation of why these rules existed:
 
 * This repository contains the original C# (.NET Core) code.
 * Refer to [Peter's Bitbucket port for Java](https://bitbucket.org/pkofler/tictactoe-mistakeproof-java).
+* Refer to [solution using F#](https://github.com/WalternativE/Fs-TicTacToe-MistakeProof).
 
 ### License
 [New BSD License](http://opensource.org/licenses/bsd-license.php), see `license.txt` in repository.
