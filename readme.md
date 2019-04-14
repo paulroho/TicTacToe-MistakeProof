@@ -38,6 +38,8 @@ So I set some rules, but without further explanation of why these rules existed:
 * This repository contains the original C# (.NET Core) code.
 * Refer to [Peter's Bitbucket port for Java](https://bitbucket.org/pkofler/tictactoe-mistakeproof-java).
 * Refer to [solution using F#](https://github.com/WalternativE/Fs-TicTacToe-MistakeProof).
+* Refer to [solution using TypeScript](https://bitbucket.org/goerge/tictactoe-mistakeproof-typescript).
 
 ### License
+
 [New BSD License](http://opensource.org/licenses/bsd-license.php), see `license.txt` in repository.
